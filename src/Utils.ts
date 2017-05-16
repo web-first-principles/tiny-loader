@@ -4,8 +4,6 @@
 
 /**
  * Check if value is a correct object
- * @param value just any value that could be passed
- * @returns checking results
  */
 export function isObject(value: any): boolean {
   return (
@@ -16,10 +14,25 @@ export function isObject(value: any): boolean {
 
 /**
  * Check if object has certain property the right way
- * @param target
- * @param propKey
- * @returns checking results
  */
 export function hasProperty(target: object, propKey: string): boolean {
   return ({}).hasOwnProperty.call(target, propKey)
+}
+
+/**
+ * Get object values as an array
+ */
+export function getObjectValues(target: Object): Array<any> {
+  const objKeys = Object.keys(target)
+  const responseArray: Array<any> = []
+
+  type MapObject<T> = {
+    [index: string]: T
+  };
+
+  objKeys.forEach(function (key: string) {
+    responseArray.push((<MapObject<any>>target)[key])
+  })
+
+  return responseArray
 }
