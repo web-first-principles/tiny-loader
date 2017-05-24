@@ -9,7 +9,7 @@ export class Node {
   private params: MapStructure<any>
   private edges: MapStructure<Node>
 
-  constructor(key: string, params?: MapStructure<any>) {
+  public constructor(key: string, params?: MapStructure<any>) {
     this.identifier = key
     this.edges = {}
     if (typeof params != 'undefined' && isObject(params)) {
@@ -20,21 +20,21 @@ export class Node {
   /**
    * Getter for node indentifier
    */
-  getId() {
+  public getId() {
     return this.identifier
   }
 
   /**
    * Getter for node connections
    */
-  getConnections() {
+  public getConnections() {
     return this.edges
   }
 
   /**
    * Add connection to another node
    */
-  addEdge(node: Node) {
+  public addEdge(node: Node) {
     if (!this.edges[node.getId()]) {
       this.edges[node.getId()] = node
     }

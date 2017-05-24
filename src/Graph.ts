@@ -10,11 +10,11 @@ import {
 export class Graph {
   private graph: MapStructure<Node>
 
-  constructor() {
+  public constructor() {
     this.graph = {}
   }
 
-  addNode(key: string, params: MapStructure<any>): void {
+  public addNode(key: string, params: MapStructure<any>): void {
     if (!hasProperty(this.graph, key)) {
       if (!isObject(params)) {
         throw new Error('Node params should be a proper object')
@@ -23,15 +23,15 @@ export class Graph {
     }
   }
 
-  addEdge(start: string, end: string): void {
+  public addEdge(start: string, end: string): void {
     this.addNode(start, {})
     this.addNode(end, {})
     this.graph[start].addEdge(this.graph[end])
   }
 
-  getConnections(key: string): Array<Node> {
+  public getConnections(key: string): Array<Node> {
     return hasProperty(this.graph, key)
-      ? getObjectValues('test')
+      ? getObjectValues(this.graph)
       : []
   }
 }

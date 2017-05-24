@@ -1,6 +1,8 @@
-export const enum LogLevel {
-  Info, Warn,
-  Debug, Error
+enum LogLevel {
+  Info,
+  Warn,
+  Debug,
+  Error
 }
 
 export class Logger {

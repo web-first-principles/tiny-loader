@@ -1,6 +1,5 @@
-/**
- * Basic utilities functions, reused across project
- */
+import * as path from 'path'
+import { parse } from 'babylon'
 
 /**
  * Check if value is a correct object
@@ -35,4 +34,56 @@ export function getObjectValues(target: Object): Array<any> {
   })
 
   return responseArray
+}
+
+export function checkModuleExtension(modulePath: string): boolean {
+  const validExtensions: Array<string> = [
+    'js',
+    'es6',
+    'ts'
+  ]
+
+  if (validExtensions.indexOf(path.extname(modulePath).slice(1)) > -1) {
+    return true
+  } else {
+    return false
+  }
+}
+
+type Token = any
+
+type ParserResponse = {
+  tokens: Array<Token>,
+  ast: any
+}
+
+export enum ErrorTypes {
+  ParseError,
+  ExtError
+}
+
+export class ParseError extends Error {
+  public type: ErrorTypes
+  constructor(message: string) {
+    super(message)
+    this.type = ErrorTypes.ParseError
+  }
+}
+
+export function parseSource(source: string): ParserResponse {
+   try {
+      const ast: any = parse(source, {
+        sourceType: 'module'
+      })
+
+      const tokens: Array<Token> = ast.tokens
+
+      return {
+        ast,
+        tokens
+      }
+
+    } catch (error) {
+      throw new ParseError('Error while parsing entry file')
+    }
 }
