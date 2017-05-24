@@ -16,8 +16,8 @@ if (!args['entry']) {
   const bundle = Bundle.create({
     name: base,
     path: dir,
-    source: 'import         {test,  pock} from "test"'
+    source: 'import         {20,  pock} from "test"'
   })
 
-  console.log(bundle.collectImports())
+  console.log(bundle.getStats())
 }

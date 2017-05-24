@@ -39,7 +39,8 @@ export class Bundle {
   public props: object = {}
   public source: string
   public fileExt: string
-
+  private imports: Array<any> = []
+  private exports: Array<any> = []
   private depsGraph: Graph
   private ast: any
   private tokens: Array<any>
@@ -71,22 +72,35 @@ export class Bundle {
       currentNode = currentNode.next
       if (currentNode.value.type.label == 'import') {
         currentNode = currentNode.next
-        console.log(currentNode)
         if (currentNode.value.type.label == '{') {
           currentNode = currentNode.next
           const imports = [currentNode.value]
           while (currentNode.value.type.label != '}') {
-            console.log('while')
             imports.push(currentNode.value)
             currentNode = currentNode.next
           }
-
-          console.log('imports', imports)
         }
       }
     }
 
-   //console.log(linkedTokens)
+  }
+
+  private addImport(node: any) {
+    const { specifiers } = node
+    specifiers.forEach((spec: any) => {
+      console.log('import specifier', spec)
+    })
+  }
+
+  public getStats() {
+    const { body } = this.ast.program
+    body.forEach((node: any) => {
+      if (node.type == 'ImportDeclaration') {
+        this.addImport(node)
+      }
+    })
+
+    console.log(this.imports)
   }
 
   /**
